@@ -1,7 +1,7 @@
 # OKD4 on Baremetal
-# Bastion host prerequisites install and configure
+# Installation services deployment playbook
 #
-# Bastion Host will be used as install node and as:
+# Services Host will be used as install node and as:
 # - DHCP and PXE boot node
 # - Local DNS server for the infrastructure
 # - Load Balancer for APIs and applications

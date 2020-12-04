@@ -13,7 +13,7 @@ options {
   memstatistics-file "/var/named/data/named_mem_stats.txt";
   recursing-file  "/var/named/data/named.recursing";
   secroots-file   "/var/named/data/named.secroots";
-  allow-query     { {{ named.allow_query_from | list_to_string }} };
+  allow-query     { {{ named.allow_query_from | list_to_string }}; };
 
   /*
    - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
@@ -29,8 +29,8 @@ options {
 
   forwarders { {{ named.forwarders | list_to_string }}; };
 
-  dnssec-enable yes;
-  dnssec-validation yes;
+  dnssec-enable {{ named.enable_dnssec }};
+  dnssec-validation {{ named.validate_dnssec }};
 
   /* Path to ISC DLV key */
   bindkeys-file "/etc/named.root.key";
@@ -55,5 +55,5 @@ zone "." IN {
 
 include "/etc/named.rfc1912.zones";
 include "/etc/named.root.key";
-include "/etc/named/named.conf.local";
+include "/etc/named/named.conf.okd";
 

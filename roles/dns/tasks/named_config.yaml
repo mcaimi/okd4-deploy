@@ -4,6 +4,11 @@
         src: etc/named.conf.j2
         dest: /etc/named.conf
         backup: yes
+    - name: Upload OKD4 zones declaration
+      template:
+        src: etc/named/named.conf.okd.j2
+        dest: /etc/named/named.conf.okd
+        backup: yes
   tags:
     - named::named_config
     - named::dns_service

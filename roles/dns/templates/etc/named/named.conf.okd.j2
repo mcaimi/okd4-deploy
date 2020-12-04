@@ -1,0 +1,7 @@
+{%- for zone in zones %}
+zone "{{ zone.name }}" {
+  type {{ zone.type }};
+  file "/etc/named/zones/{{ zone.zonefile }}";# zone file path
+};
+{% endfor %}
+

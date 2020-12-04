@@ -16,11 +16,14 @@ named:
     - 127.0.0.1
     - 10.10.8.2
   listen_port: 53
+  local_config: named.conf.okd
 
 records:
 
 zones:
   - name: okd.local
     zonefile: zonedb.okd.local
+    type: master
   - name: 8.10.10.in-addr.arpa
     zonefile: zonedb.10.10.8
+    type: master
