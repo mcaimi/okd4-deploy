@@ -1,0 +1,3 @@
+- include: named_service.yaml
+- include: named_config.yaml
+- include: named_zones.yaml
