@@ -1,0 +1,12 @@
+- block:
+    - name: Allow required services in FirewallD
+      ansible.posix.firewalld:
+        service: "{{ item.name }}"
+        permanent: "{{ item.rule_is_permanent }}"
+        state: "{{ item.state }}"
+      loop:
+        "{{ firewall.services }}"
+      notify: Reload FirewallD
+  tags:
+    - firewalld::network_services
+    - firewalld::allowed_protocols
