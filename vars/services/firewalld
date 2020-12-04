@@ -1,0 +1,23 @@
+---
+firewall:
+  services:
+    - name: ssh
+      rule_is_permanent: yes
+      state: enabled
+    - name: http
+      rule_is_permanent: yes
+      state: enabled
+    - name: https
+      rule_is_permanent: yes
+      state: enabled
+    - name: dhcp
+      rule_is_permanent: yes
+      state: enabled
+    - name: tftp
+      rule_is_permanent: yes
+      state: enabled
+    - name: dns
+      rule_is_permanent: yes
+      state: enabled
+  state: started
+
