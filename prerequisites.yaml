@@ -1,0 +1,34 @@
+# OKD4 on Baremetal
+# Bastion host prerequisites install and configure
+#
+# Bastion Host will be used as install node and as:
+# - DHCP and PXE boot node
+# - Local DNS server for the infrastructure
+# - Load Balancer for APIs and applications
+
+- hosts: services
+  remote_user: opc
+  become: yes
+  any_errors_fatal: true
+
+  pre_tasks:
+    - include_vars:
+        file: "linux_server"
+    - include_vars:
+        file: "services/firewalld"
+    - include_vars:
+        file: "services/dns"
+    - include_vars:
+        file: "services/dhcp"
+    - include_vars:
+        file: "services/pxe"
+    - include_vars:
+        file: "services/haproxy"
+  roles:
+    - linux_server
+    - firewalld
+    - dns
+    #- dhcp
+    #- pxe
+    #- haproxy
+
