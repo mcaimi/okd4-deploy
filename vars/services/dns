@@ -1,0 +1,26 @@
+---
+named:
+  forwarders:
+    - 8.8.8.8
+    - 8.8.4.4
+    - 1.1.1.1
+    - 1.0.0.1
+    - 9.9.9.9
+  enable_dnssec: yes
+  validate_dnssec: yes
+  recursion_enabled: yes
+  allow_query_from:
+    - localhost
+    - 10.10.8.2/27
+  listen_addresses:
+    - 127.0.0.1
+    - 10.10.8.2
+  listen_port: 53
+
+records:
+
+zones:
+  - name: okd.local
+    zonefile: zonedb.okd.local
+  - name: 8.10.10.in-addr.arpa
+    zonefile: zonedb.10.10.8
