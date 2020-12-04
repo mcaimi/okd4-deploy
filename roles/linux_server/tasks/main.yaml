@@ -1,0 +1,4 @@
+---
+- include: update.yaml
+  when: package_manager.perform_distro_update == 'yes'
+- include: packages.yaml

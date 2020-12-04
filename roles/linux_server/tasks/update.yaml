@@ -1,0 +1,17 @@
+- block:
+    - name: Perform Distro Update (DNF)
+      dnf:
+        name: "*"
+        state: latest
+        update_cache: yes
+      when: ansible_pkg_mgr == "dnf"
+    - name: Perform Distro Update (YUM)
+      yum:
+        name: "*"
+        state: latest
+        update_cache: yes
+      when: ansible_pkg_mgr == "yum"
+  tags:
+    - os::distro_update
+    - os::pakcage_update
+    - os::upgrade
