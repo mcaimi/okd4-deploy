@@ -9,6 +9,13 @@
 #
 # output: "first;second"
 #
+# optional left and right pads can be specified in jinja template
+# final string will be rendered as template:
+#
+#   <optional left pad char><string text><optional right pad char><separator>
+#
+
+from string import Template
 
 # main filter class
 class FilterModule(object):
@@ -17,10 +24,20 @@ class FilterModule(object):
         return {'list_to_string': self.list_to_string}
 
     # list flatten method
-    def list_to_string(self, input_list, separator=";"):
+    def list_to_string(self, input_list, separator=";", rpad=False, lpad=False, pad_char=" "):
+        nothing = ''
+        PADS_TABLE = {
+                (True, True): (pad_char, pad_char),
+                (True, False): (pad_char, nothing),
+                (False, True): (nothing, pad_char),
+                (False, False): (nothing, nothing)
+            }
+
         if type(input_list) is not list:
-            raise TypeError("input_list must be a python-compatible list object")
+            raise TypeError("input_list must be a python-compatible list")
+
+        # apply padding if needed
+        lp, rp = PADS_TABLE.get((lpad, rpad))
 
         # return the flattened string
-        return separator.join(input_list)
-
+        return separator.join([Template("$left_pad$text$right_pad").substitute(text=t, left_pad=lp, right_pad=rp) for t in input_list])

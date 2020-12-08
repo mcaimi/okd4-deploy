@@ -5,7 +5,7 @@
 //
 
 options {
-  listen-on port {{ named.listen_port }} { {{ named.listen_addresses | list_to_string  }}; };
+  listen-on port {{ named.listen_port }} { {{ named.listen_addresses | list_to_string(separator="; ") }}; };
   # listen-on-v6 port 53 { ::1; };
   directory   "/var/named";
   dump-file   "/var/named/data/cache_dump.db";
@@ -13,7 +13,7 @@ options {
   memstatistics-file "/var/named/data/named_mem_stats.txt";
   recursing-file  "/var/named/data/named.recursing";
   secroots-file   "/var/named/data/named.secroots";
-  allow-query     { {{ named.allow_query_from | list_to_string }}; };
+  allow-query     { {{ named.allow_query_from | list_to_string(separator="; ") }}; };
 
   /*
    - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
@@ -27,7 +27,7 @@ options {
   */
   recursion {{ named.recursion_enabled }};
 
-  forwarders { {{ named.forwarders | list_to_string }}; };
+  forwarders { {{ named.forwarders | list_to_string(separator="; ") }}; };
 
   dnssec-enable {{ named.enable_dnssec }};
   dnssec-validation {{ named.validate_dnssec }};
