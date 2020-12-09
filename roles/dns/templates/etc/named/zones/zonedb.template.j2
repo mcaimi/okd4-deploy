@@ -1,0 +1,17 @@
+; zone file for zone {{ item.name }}
+; managed by Ansible
+;
+$TTL    {{ item.global_ttl }}
+@       IN      SOA     {{ named.soa }}.{{ named.base_domain}}. {{ named.admin_name }}.{{ named.base_domain }}. (
+             {{ item.serial }}     ; Serial
+             {{ item.refresh }}    ; Refresh
+             {{ item.retry }}      ; Retry
+             {{ item.expire }}     ; Expire
+             {{ item.global_ttl }}        ; Negative Cache TTL
+)
+
+; name servers - NS records
+    IN      NS      {{ named.soa }}.
+
+; zone records
+{{ item.records | render_records(domain=named.base_domain) }}
