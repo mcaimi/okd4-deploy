@@ -55,5 +55,5 @@ zone "." IN {
 
 include "/etc/named.rfc1912.zones";
 include "/etc/named.root.key";
-include "/etc/named/named.conf.okd";
+include "/etc/named/{{ named.local_config }}";
 
