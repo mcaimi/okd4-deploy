@@ -1,0 +1,4 @@
+- name: Reload Named
+  systemd:
+    service: named.service
+    state: reloaded

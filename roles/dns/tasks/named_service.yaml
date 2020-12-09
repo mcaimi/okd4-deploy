@@ -1,0 +1,9 @@
+- block:
+    - name: Enable BIND Named Service
+      systemd:
+        name: named.service
+        state: "{{ named.state }}"
+        enabled: "{{ named.enabled }}"
+  tags:
+    - named::systemd_unit
+

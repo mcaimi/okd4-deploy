@@ -1,0 +1,22 @@
+- block:
+    - name: Create Zone Databases Paths
+      file:
+        path: /etc/named/zones
+        state: directory
+        mode: 0755
+    - name: Compile Zone Databases
+      template:
+        src: etc/named/zones/zonedb.template.j2
+        dest: /etc/named/zones/{{ item.zonefile }}
+        backup: yes
+      loop:
+        "{{ named.zones }}"
+      register: zones_config
+    - name: Reload Named Zones
+      systemd:
+        name: named.service
+        state: reloaded
+      when: zones_config.changed
+  tags:
+    - named::zone_config
+    - named::zonefile_rendering
