@@ -4,10 +4,15 @@
         src: etc/named.conf.j2
         dest: /etc/named.conf
         backup: yes
+    - name: Setup Local Resolver
+      template:
+        src: etc/resolv.conf.j2
+        dest: /etc/resolv.conf
+        backup: yes
     - name: Upload OKD4 zones declaration
       template:
         src: etc/named/named.conf.okd.j2
-        dest: /etc/named/named.conf.okd
+        dest: /etc/named/{{ named.local_config }}
         backup: yes
   tags:
     - named::named_config
