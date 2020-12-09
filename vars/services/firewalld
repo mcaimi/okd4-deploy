@@ -20,4 +20,5 @@ firewall:
       rule_is_permanent: yes
       state: enabled
   state: started
+  enabled: yes
 

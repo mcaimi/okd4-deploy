@@ -3,7 +3,7 @@
       systemd:
         name: firewalld.service
         state: "{{ firewall.state }}"
-        enabled: yes
+        enabled: "{{ firewall.enabled }}"
   tags:
     - firewalld::systemd_unit
 
