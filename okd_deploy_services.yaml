@@ -24,11 +24,13 @@
         file: "services/pxe"
     - include_vars:
         file: "services/haproxy"
+    - include_vars:
+        file: "services/httpd"
   roles:
     - linux_server
     - firewalld
     - dns
-    #- dhcp
-    #- pxe
-    #- haproxy
-
+    - haproxy
+    - dhcp
+    - pxe
+    - httpd

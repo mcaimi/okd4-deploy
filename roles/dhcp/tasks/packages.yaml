@@ -1,0 +1,19 @@
+- block:
+    - name: Install required packages (DNF)
+      dnf:
+        name: "{{ item }}"
+        state: present
+      loop:
+        "{{ dnsmasq.required_packages }}"
+      when: ansible_pkg_mgr == 'dnf'
+    - name: Install required packages (YUM)
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        "{{ dnsmasq.required_packages }}"
+      when: ansible_pkg_mgr == 'yum'
+  tags:
+    - os::required_packages
+    - os::prerequisites
+
