@@ -1,0 +1,15 @@
+- block:
+    - name: Upload HAProxy Configuration
+      template:
+        src: etc/haproxy/haproxy.cfg.j2
+        dest: /etc/haproxy/haproxy.cfg
+        backup: yes
+      register: haproxy_config
+    - name: Reload HAProxy
+      systemd:
+        name: haproxy.service
+        state: reloaded
+      when: haproxy_config.changed
+  tags:
+    - haproxy::config
+    - haproxy::okd_balancers

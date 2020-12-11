@@ -1,0 +1,6 @@
+---
+- name: Reload HAProxy
+  systemd:
+    name: haproxy.service
+    state: reloaded
+

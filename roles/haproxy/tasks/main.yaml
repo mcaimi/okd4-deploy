@@ -1,0 +1,3 @@
+- include: packages.yaml
+- include: haproxy_config.yaml
+- include: haproxy_service.yaml

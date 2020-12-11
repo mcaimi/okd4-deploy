@@ -1,0 +1,63 @@
+# Configuration file managed by Ansible
+# Global settings
+#---------------------------------------------------------------------
+global
+    maxconn     {{ haproxy.globals.maxconn }}
+    log         /dev/log local0 info
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    user        haproxy
+    group       haproxy
+    daemon
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats
+
+#---------------------------------------------------------------------
+# common defaults that all the 'listen' and 'backend' sections will
+# use if not designated in their block
+#---------------------------------------------------------------------
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          300s
+    timeout server          300s
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 20000
+
+listen stats
+    bind :9000
+    mode http
+    stats enable
+    stats uri /
+
+# OKD balancing instances
+{% for frontend in haproxy.frontends %}
+frontend {{ frontend.name }}
+    bind :{{ frontend.port }}
+    default_backend {{ frontend.backend }}
+    mode {{ frontend.mode }}
+    option {{ frontend.options }}
+{% endfor %}
+
+{% for backend in haproxy.backends %}
+backend {{ backend.name }}
+  balance {{ backend.balance }}
+  mode {{ backend.mode }}
+  {% for server in backend.servers %}
+  server  {{ server.name }} {{ server.ipaddress }}:{{ server.port }} check
+  {% endfor %}
+
+{% endfor %}
+
+
+
