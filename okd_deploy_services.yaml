@@ -15,6 +15,8 @@
     - include_vars:
         file: "linux_server"
     - include_vars:
+        file: "okd_cluster"
+    - include_vars:
         file: "services/firewalld"
     - include_vars:
         file: "services/dns"
