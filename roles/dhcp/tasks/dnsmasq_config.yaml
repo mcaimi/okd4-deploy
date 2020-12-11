@@ -1,0 +1,25 @@
+- block:
+    - name: Upload dnsmasq.conf
+      template:
+        src: etc/dnsmasq.conf.j2
+        dest: /etc/dnsmasq.conf
+        backup: yes
+      register: dnsmasq_base
+    - name: Reload Dnsmasq Base Config
+      systemd:
+        name: dnsmasq.service
+        state: restarted
+      when: dnsmasq_base.changed
+    - name: Upload Static Leases Table
+      template:
+        src: etc/dnsmasq.d/okd-leases.conf.j2
+        dest: /etc/dnsmasq.d/okd-leases.conf
+        backup: yes
+      register: dnsmasq_leases
+    - name: Reload Dnsmasq Static Leases
+      systemd:
+        name: dnsmasq.service
+        state: restarted
+      when: dnsmasq_leases.changed
+  tags:
+    - dhcp::service_configuration

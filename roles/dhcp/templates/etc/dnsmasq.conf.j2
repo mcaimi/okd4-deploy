@@ -1,4 +1,5 @@
 # Configuration file for dnsmasq.
+# Managed by Ansible
 #
 # Format is one option per line, legal options are the same
 # as the long options legal on the command line. See
@@ -8,6 +9,9 @@
 # (53). Setting this to zero completely disables DNS function,
 # leaving only DHCP and/or TFTP.
 #port=5353
+
+# DISABLE DNS
+port=0
 
 # The following two options make you a better netizen, since they
 # tell dnsmasq to filter out queries which the public DNS cannot
@@ -103,7 +107,7 @@
 # specified interfaces (and the loopback) give the name of the
 # interface (eg eth0) here.
 # Repeat the line for more than one interface.
-#interface=
+interface={{ dnsmasq.dhcp_interface }}
 # Or you can specify which interface _not_ to listen on
 #except-interface=
 # Or which to listen on by address (remember to include 127.0.0.1 if
@@ -155,6 +159,7 @@
 # repeat this for each network on which you want to supply DHCP
 # service.
 #dhcp-range=192.168.0.50,192.168.0.150,12h
+dhcp-range={{ dnsmasq.dhcp_range }},{{ dnsmasq.validity }}
 
 # This is an example of a DHCP range where the netmask is given. This
 # is needed for networks we reach the dnsmasq DHCP server via a relay

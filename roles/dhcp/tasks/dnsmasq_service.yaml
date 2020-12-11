@@ -1,0 +1,8 @@
+- block:
+    - name: Enable DNSMASQ Service (DHCP Only)
+      systemd:
+        name: dnsmasq.service
+        state: "{{ dnsmasq.state }}"
+        enabled: "{{ dnsmasq.enabled }}"
+  tags:
+    - dnsmasq::systemd_service

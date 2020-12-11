@@ -1,0 +1,23 @@
+# Managed by Ansible
+# Set static IP assignments for all OKD nodes
+{% for entry in okd.machines.bootstrap %}
+dhcp-host={{ entry.mac_address }},{{ entry.name }}.{{ okd.base_domain }},{{ entry.ipaddress }},infinite # entry for {{ entry.name }}
+{% endfor %}
+{% for entry in okd.machines.masters %}
+dhcp-host={{ entry.mac_address }},{{ entry.name }}.{{ okd.base_domain }},{{ entry.ipaddress }},infinite # entry for {{ entry.name }}
+{% endfor %}
+{% for entry in okd.machines.workers %}
+dhcp-host={{ entry.mac_address }},{{ entry.name }}.{{ okd.base_domain }},{{ entry.ipaddress }},infinite # entry for {{ entry.name }}
+{% endfor %}
+
+# Set gateway. Following two lines are identical.
+dhcp-option=option:router,{{ dnsmasq.gateway }}
+
+# Set DNS server.
+dhcp-option=6,{{ dnsmasq.dns_host }}
+
+# Logging.
+log-facility={{ dnsmasq.log_facility }}   # path.
+log-async
+log-queries # log queries.
+log-dhcp    # log dhcp related messages.
