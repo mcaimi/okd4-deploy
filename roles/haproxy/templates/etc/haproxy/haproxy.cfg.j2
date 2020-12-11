@@ -53,8 +53,22 @@ frontend {{ frontend.name }}
 backend {{ backend.name }}
   balance {{ backend.balance }}
   mode {{ backend.mode }}
-  {% for server in backend.servers %}
-  server  {{ server.name }} {{ server.ipaddress }}:{{ server.port }} check
+  {% for server in okd.machines.bootstrap %}
+  {% if backend.tag in server.tag.split(",") %}
+  server  {{ server.name }} {{ server.ipaddress }}:{{ backend.port }} check
+  {% endif %}
+  {% endfor %}
+
+  {% for server in okd.machines.masters %}
+  {% if backend.tag in server.tag.split(",") %}
+  server  {{ server.name }} {{ server.ipaddress }}:{{ backend.port }} check
+  {% endif %}
+  {% endfor %}
+
+  {% for server in okd.machines.workers %}
+  {% if backend.tag in server.tag.split(",") %}
+  server  {{ server.name }} {{ server.ipaddress }}:{{ backend.port }} check
+  {% endif %}
   {% endfor %}
 
 {% endfor %}

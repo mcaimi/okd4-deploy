@@ -31,47 +31,21 @@ haproxy:
   backends:
     - name: okd_kube_api_backend
       balance: source
+      port: 6443
       mode: tcp
-      servers:
-        - name: bootstrap.okd.local
-          ipaddress: 10.10.8.7
-          port: 6443
-        - name: master.okd.local
-          port: 6443
-          ipaddress: 10.10.8.3
+      tag: "api"
     - name: okd_machineconfig_backend
       balance: source
       mode: tcp
-      servers:
-        - name: bootstrap.okd.local
-          ipaddress: 10.10.8.7
-          port: 6443
-        - name: master.okd.local
-          port: 6443
-          ipaddress: 10.10.8.3
+      port: 22623
+      tag: "machineconfig"
     - name: okd_ingress_backend
       balance: source
+      port: 80
       mode: tcp
-      servers:
-        - name: worker1.okd.local
-          port: 80
-          ipaddress: 10.10.8.4
-        - name: worker2.okd.local
-          port: 80
-          ipaddress: 10.10.8.5
-        - name: worker3.okd.local
-          port: 80
-          ipaddress: 10.10.8.6
+      tag: "ingress"
     - name: okd_ingress_ssl_backend
       balance: source
+      port: 443
       mode: tcp
-      servers:
-        - name: worker1.okd.local
-          port: 443
-          ipaddress: 10.10.8.4
-        - name: worker2.okd.local
-          port: 443
-          ipaddress: 10.10.8.5
-        - name: worker3.okd.local
-          port: 443
-          ipaddress: 10.10.8.6
+      tag: "ingress"
