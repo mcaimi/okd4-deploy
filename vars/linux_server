@@ -3,11 +3,6 @@ package_manager:
   perform_distro_update: "no"
 
 required_packages:
-  - bind
-  - bind-utils
-  - haproxy
-  - firewalld
-  - httpd
-  - dnsmasq
-  - dnsmasq-utils
-  - syslinux
+  - iptraf
+  - tcpdump
+  - nmap

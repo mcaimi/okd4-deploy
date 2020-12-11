@@ -1,0 +1,77 @@
+haproxy:
+  required_packages:
+    - haproxy
+  state: started
+  enabled: yes
+  globals:
+    maxconn: 20000
+
+  frontends:
+    - name: okd_kube_api_frontend
+      port: 6443
+      backend: okd_kube_api_backend
+      mode: tcp
+      options: tcplog
+    - name: okd_machineconfig_frontend
+      port: 22623
+      backend: okd_machineconfig_backend
+      mode: tcp
+      options: tcplog
+    - name: okd_ingress_frontend
+      port: 80
+      backend: okd_ingress_backend
+      mode: tcp
+      options: tcplog
+    - name: okd_ingress_ssl_frontend
+      port: 443
+      backend: okd_ingress_ssl_backend
+      mode: tcp
+      options: tcplog
+
+  backends:
+    - name: okd_kube_api_backend
+      balance: source
+      mode: tcp
+      servers:
+        - name: bootstrap.okd.local
+          ipaddress: 10.10.8.7
+          port: 6443
+        - name: master.okd.local
+          port: 6443
+          ipaddress: 10.10.8.3
+    - name: okd_machineconfig_backend
+      balance: source
+      mode: tcp
+      servers:
+        - name: bootstrap.okd.local
+          ipaddress: 10.10.8.7
+          port: 6443
+        - name: master.okd.local
+          port: 6443
+          ipaddress: 10.10.8.3
+    - name: okd_ingress_backend
+      balance: source
+      mode: tcp
+      servers:
+        - name: worker1.okd.local
+          port: 80
+          ipaddress: 10.10.8.4
+        - name: worker2.okd.local
+          port: 80
+          ipaddress: 10.10.8.5
+        - name: worker3.okd.local
+          port: 80
+          ipaddress: 10.10.8.6
+    - name: okd_ingress_ssl_backend
+      balance: source
+      mode: tcp
+      servers:
+        - name: worker1.okd.local
+          port: 443
+          ipaddress: 10.10.8.4
+        - name: worker2.okd.local
+          port: 443
+          ipaddress: 10.10.8.5
+        - name: worker3.okd.local
+          port: 443
+          ipaddress: 10.10.8.6

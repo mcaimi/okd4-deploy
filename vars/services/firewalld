@@ -1,5 +1,7 @@
 ---
 firewall:
+  required_packages:
+    - firewalld
   services:
     - name: ssh
       rule_is_permanent: yes

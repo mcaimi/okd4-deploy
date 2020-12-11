@@ -1,0 +1,3 @@
+httpd:
+  required_packages:
+    - httpd

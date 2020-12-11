@@ -1,5 +1,8 @@
 ---
 named:
+  required_packages:
+    - bind
+    - bind-utils
   forwarders:
     - 8.8.8.8
     - 8.8.4.4

@@ -1,0 +1,3 @@
+syslinux:
+  required_packages:
+    - syslinux
