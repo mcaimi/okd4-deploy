@@ -1,0 +1,3 @@
+- include: packages.yaml
+- include: okd_tools.yaml
+- include: ignition_manifests.yaml

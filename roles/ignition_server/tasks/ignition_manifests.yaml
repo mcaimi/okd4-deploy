@@ -1,0 +1,21 @@
+- block:
+    - name: Create Manifests Folder
+      file:
+        path: /root/{{ okd.cluster_name }}
+        state: directory
+        owner: root
+        group: root
+        mode: 0644
+    - name: Upload install-config.yaml to the manifests folder
+      template:
+        src: install-config.yaml.j2
+        dest: /root/{{ okd.cluster_name }}/install-config.yaml
+        backup: yes
+      register: install_config
+    - name: Render Installation Manifests
+      command: >
+        /usr/local/bin/openshift-install create manifests --dir=/root/{{ okd.cluster_name }}/
+      when: install_config.changed
+  tags:
+    - ignition::install_config
+    - ignition::install_manifests

@@ -1,0 +1,33 @@
+apiVersion: v1
+baseDomain: {{ okd.base_domain }}
+metadata:
+  name: {{ okd.cluster_name }}
+
+compute:
+- hyperthreading: Enabled
+  name: worker
+  replicas: 0
+
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  replicas: 3
+
+networking:
+{% if okd.machine_cidr %}
+  machineCIDR: {{ okd.machine_cidr }}
+{% endif %}
+  clusterNetwork:
+  - cidr: {{ okd.cluster_subnet }}
+    hostPrefix: {{ okd.cluster_host_prefix }}
+  networkType: {{ okd.network_type }}
+  serviceNetwork:
+  - {{ okd.services_subnet }}
+
+platform:
+  none: {}
+
+fips: {{ okd.fips_mode }}
+
+pullSecret: '{{ okd.pull_secret }}'
+sshKey: '{{ okd.ssh_key }}'

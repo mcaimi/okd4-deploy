@@ -27,12 +27,12 @@
     - include_vars:
         file: "services/haproxy"
     - include_vars:
-        file: "services/httpd"
+        file: "services/ignition_server"
   roles:
     - linux_server
     - firewalld
     - dns
     - haproxy
+    - ignition_server
     - dhcp
     - pxe
-    - httpd

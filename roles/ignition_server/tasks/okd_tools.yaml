@@ -1,0 +1,12 @@
+- block:
+    - name: Download and unpack OKD Clients and Install Tools
+      unarchive:
+        src: "{{ item }}"
+        dest: /usr/local/bin
+        remote_src: yes
+      loop:
+        - "{{ okd.install_link }}"
+        - "{{ okd.client_link }}"
+  tags:
+    - ignition::openshift_install_download
+    - ignition::openshift_client_download
