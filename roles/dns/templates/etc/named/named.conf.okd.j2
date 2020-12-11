@@ -1,7 +1,11 @@
-{%- for zone in named.zones %}
-zone "{{ zone.name }}" {
-  type {{ zone.type }};
-  file "/etc/named/zones/{{ zone.zonefile }}";# zone file path
+zone "{{ okd.base_domain }}" {
+  type master;
+  file "/etc/named/zones/zonedb.{{ okd.base_domain }}";
 };
-{% endfor %}
+
+zone "{{ okd.machine_cidr | reverse_zone }}" {
+  type master;
+  file "/etc/named/zones/zonedb.{{ okd.machine_cidr | reverse_zone }}";
+};
+
 

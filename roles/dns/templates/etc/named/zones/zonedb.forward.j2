@@ -1,0 +1,41 @@
+$TTL {{ named.ttl }}
+@       IN      SOA     {{ okd.services.nameserver.name }}.{{ okd.base_domain }}. admin.{{ okd.base_domain }}. (
+                  {{ named.serial }}     ; Serial
+                  {{ named.refresh }}     ; Refresh
+                  {{ named.retry }}     ; Retry
+                  {{ named.expire }}     ; Expire
+                  {{ named.ttl }} )   ; Negative Cache TTL
+
+; name servers - NS record
+@                     IN     NS    {{ okd.services.nameserver.name }}.{{ okd.base_domain }}.
+; name servers - A record
+{{ okd.services.nameserver.name }}.{{ okd.base_domain }}.      IN     A     {{ okd.services.nameserver.ipaddress }}
+
+; All other A records
+; bootstrap node
+{% for machine in okd.machines.bootstrap %}
+{{ machine.name }}  IN  A   {{ machine.ipaddress }}
+{% endfor %}
+; master nodes
+{% for machine in okd.machines.masters %}
+{{ machine.name }}  IN  A   {{ machine.ipaddress }}
+{% endfor %}
+; worker nodes
+{% for machine in okd.machines.workers %}
+{{ machine.name }}  IN  A   {{ machine.ipaddress }}
+{% endfor %}
+
+$ORIGIN {{ okd.cluster_name }}.{{ okd.base_domain }}.
+api                   IN     A     {{ okd.services.balancer.ipaddress }}
+api-int               IN     A     {{ okd.services.balancer.ipaddress }}
+{% for machine in okd.machines.masters %}
+etcd-{{ loop.index }} IN     A     {{ machine.ipaddress }}
+{% endfor %}
+
+{% for machine in okd.machines.masters %}
+_etcd-server-ssl._tcp SRV 0 10 2380 etcd-{{loop.index}}
+{% endfor %}
+
+$ORIGIN apps.{{ okd.cluster_name }}.{{ okd.base_domain }}.
+*                     IN     A     {{ okd.services.balancer.ipaddress }}
+

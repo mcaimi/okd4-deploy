@@ -14,119 +14,17 @@ named:
   recursion_enabled: yes
   allow_query_from:
     - localhost
-    - 10.10.8.0/27
+    - "{{ okd.machine_cidr }}"
   listen_addresses:
     - 127.0.0.1
-    - 10.10.8.2
+    - "{{ okd.services.nameserver.ipaddress }}"
   listen_port: 53
   local_config: named.conf.okd
-  base_domain: okd.local
-  soa: bastion
-  admin_name: admin
+  base_domain: "{{ okd.base_domain }}"
   state: started
   enabled: yes
-
-  zones:
-    - name: okd.local
-      global_ttl: 86400
-      serial: 1
-      refresh: 192768
-      retry: 86400
-      expire: 2419200
-      zonefile: zonedb.okd.local
-      type: master
-      records:
-        - name: bastion
-          type: A
-          value: 10.10.8.2
-        - name: master
-          type: A
-          value: 10.10.8.3
-        - name: worker1
-          type: A
-          value: 10.10.8.4
-        - name: worker2
-          type: A
-          value: 10.10.8.5
-        - name: worker3
-          type: A
-          value: 10.10.8.6
-        - name: bootstrap
-          type: A
-          value: 10.10.8.7
-        - name: api
-          type: A
-          value: 10.10.8.2
-        - name: api-int
-          type: A
-          value: 10.10.8.2
-        - name: "*.apps"
-          type: A
-          value: 10.10.8.2
-        - name: etcd-0
-          type: A
-          value: 10.10.8.3
-        - name: etcd-1
-          type: A
-          value: 10.10.8.3
-        - name: etcd-2
-          type: A
-          value: 10.10.8.3
-        - name: etcd
-          type: SRV
-          proto: tcp
-          ttl: 86400
-          priority: 0
-          weight: 10
-          port: 2380
-          target: etcd-0
-        - name: etcd
-          type: SRV
-          proto: tcp
-          ttl: 86400
-          priority: 0
-          weight: 10
-          port: 2380
-          target: etcd-1
-        - name: etcd
-          type: SRV
-          proto: tcp
-          ttl: 86400
-          priority: 0
-          weight: 10
-          port: 2380
-          target: etcd-2
-    - name: 8.10.10.in-addr.arpa
-      global_ttl: 86400
-      serial: 1
-      refresh: 192768
-      retry: 86400
-      expire: 2419200
-      zonefile: zonedb.10.10.8
-      type: master
-      records:
-        - name: bastion
-          type: PTR
-          value: 2
-        - name: master
-          type: PTR
-          value: 3
-        - name: worker1
-          type: PTR
-          value: 4
-        - name: worker2
-          type: PTR
-          value: 5
-        - name: worker3
-          type: PTR
-          value: 6
-        - name: bootstrap
-          type: PTR
-          value: 7
-        - name: api
-          type: PTR
-          value: 2
-        - name: api-int
-          type: PTR
-          value: 2
-
+  ttl: 86400
+  serial: 1
+  refresh: 7200
+  retry: 7200
+  expire: 2419200

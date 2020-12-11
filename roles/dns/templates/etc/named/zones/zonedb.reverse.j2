@@ -1,0 +1,26 @@
+$ORIGIN {{ okd.machine_cidr | reverse_zone }}
+$TTL {{ named.ttl }}
+@       IN      SOA     {{ okd.services.nameserver.name }}.{{ okd.base_domain }}. admin.{{ okd.base_domain }}. (
+                  {{ named.serial }}     ; Serial
+                  {{ named.refresh }}     ; refresh (2 hous)
+                  {{ named.retry }}     ; retry (2 hours)
+                  {{ named.expire }}     ; expire (5 weeks 6 days 16 hours)
+                  {{ named.ttl }} )   ; minimum (1 day)
+
+{{ okd.machine_cidr | reverse_zone }} IN NS {{ okd.services.nameserver.name }}.{{ okd.base_domain }}.
+{{ okd.services.nameserver.ipaddress | octet(index=3) }} IN PTR {{ okd.services.nameserver.name }}.{{okd.base_domain }}
+
+; PTR records
+; bootstrap
+{% for machine in okd.machines.bootstrap %}
+{{ machine.ipaddress | octet(index=3) }}  IN  PTR   {{ machine.name }}.{{ okd.base_domain }}
+{% endfor %}
+; masters
+{% for machine in okd.machines.masters %}
+{{ machine.ipaddress | octet(index=3) }}  IN  PTR   {{ machine.name }}.{{ okd.base_domain }}
+{% endfor %}
+; workers
+{% for machine in okd.machines.workers %}
+{{ machine.ipaddress | octet(index=3) }}  IN  PTR   {{ machine.name }}.{{ okd.base_domain }}
+{% endfor %}
+

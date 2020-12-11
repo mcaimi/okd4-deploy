@@ -4,19 +4,28 @@
         path: /etc/named/zones
         state: directory
         mode: 0755
-    - name: Compile Zone Databases
+    - name: Compile Forward Zone Database
       template:
-        src: etc/named/zones/zonedb.template.j2
-        dest: /etc/named/zones/{{ item.zonefile }}
+        src: etc/named/zones/zonedb.forward.j2
+        dest: /etc/named/zones/zonedb.{{ okd.base_domain }}
         backup: yes
-      loop:
-        "{{ named.zones }}"
-      register: zones_config
-    - name: Reload Named Zones
+      register: forward_zone
+    - name: Reload Forward Zone
       systemd:
         name: named.service
         state: reloaded
-      when: zones_config.changed
+      when: forward_zone.changed
+    - name: Compile Reverse Zone Database
+      template:
+        src: etc/named/zones/zonedb.reverse.j2
+        dest: /etc/named/zones/zonedb.{{ okd.machine_cidr | reverse_zone }}
+        backup: yes
+      register: reverse_zone
+    - name: Reload Reverse Zone
+      systemd:
+        name: named.service
+        state: reloaded
+      when: reverse_zone.changed
   tags:
     - named::zone_config
     - named::zonefile_rendering
