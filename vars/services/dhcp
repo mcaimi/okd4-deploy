@@ -2,12 +2,14 @@ dnsmasq:
   required_packages:
     - dnsmasq
     - dnsmasq-utils
+    - syslinux
   dhcp_interface: eth0
   log_facility: "/var/log/leases.log"
   dhcp_range: "10.0.0.10,10.0.0.100,255.255.255.0"
   validity: 8h
   dns_host: "{{ okd.services.nameserver.ipaddress }}"
   gateway: "{{ okd.machine_default_gw }}"
+  tftp_root: "/srv/tftproot"
   state: started
   enabled: yes
 

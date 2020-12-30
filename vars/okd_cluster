@@ -1,5 +1,6 @@
 okd:
   version: 4.6.0
+  cleanup_manifest_folder: "{{ cleanup_manifests | default(False) }}"
   install_link: "https://github.com/openshift/okd/releases/download/4.6.0-0.okd-2020-11-27-200126/openshift-install-linux-4.6.0-0.okd-2020-11-27-200126.tar.gz"
   install_checksum: "sha256:6eb1bbabb84e3b165aa7cfe673d5d60b2490616bfa9dca5f5878ead7aed3e770"
   client_link: "https://github.com/openshift/okd/releases/download/4.6.0-0.okd-2020-11-27-200126/openshift-client-linux-4.6.0-0.okd-2020-11-27-200126.tar.gz"

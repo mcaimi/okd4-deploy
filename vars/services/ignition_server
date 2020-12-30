@@ -1,3 +1,8 @@
 httpd:
+  httpd_tcp_port: 8080
+  httpd_ignition_document_root: "/var/www/html"
+  cluster_name: "{{ okd.cluster_name }}"
+  state: started
+  enabled: yes
   required_packages:
     - httpd
