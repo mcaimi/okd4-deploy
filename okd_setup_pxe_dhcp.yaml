@@ -1,0 +1,21 @@
+# OKD4 on Baremetal
+# Installation services deployment playbook
+#
+# Services Host will be used as install node and as:
+# - DHCP and PXE boot node
+
+- hosts: services
+  remote_user: opc
+  become: yes
+  any_errors_fatal: true
+
+  pre_tasks:
+    - include_vars:
+        file: "okd_cluster"
+    - include_vars:
+        file: "services/dhcp"
+    - include_vars:
+        file: "services/pxe"
+  roles:
+    - dhcp
+    - pxe

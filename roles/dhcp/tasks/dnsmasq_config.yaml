@@ -16,6 +16,19 @@
         dest: /etc/dnsmasq.d/okd-leases.conf
         backup: yes
       register: dnsmasq_leases
+    - name: Create tftp root directory
+      file:
+        path: "{{ item  }}"
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+      loop:
+        - "{{ dnsmasq.tftp_root }}"
+        - "{{ dnsmasq.tftp_root }}/pxelinux.cfg"
+    - name: Copy PXELINUX boot payload
+      command: >
+        cp /usr/share/syslinux/pxelinux.0 {{ dnsmasq.tftp_root }}/
     - name: Reload Dnsmasq Static Leases
       systemd:
         name: dnsmasq.service
