@@ -1,3 +1,5 @@
 - include: packages.yaml
 - include: okd_tools.yaml
 - include: ignition_manifests.yaml
+- include: httpd_config.yaml
+- include: httpd_service.yaml

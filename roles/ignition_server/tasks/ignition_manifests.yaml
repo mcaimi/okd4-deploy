@@ -1,21 +1,48 @@
 - block:
+    - name: WARNING - MANIFEST FOLDER CLEANUP REQUESTED
+      file:
+        path: "{{ httpd.httpd_ignition_document_root }}/{{ httpd.cluster_name}}"
+        state: absent
+      when: okd.cleanup_manifest_folder
     - name: Create Manifests Folder
       file:
-        path: /root/{{ okd.cluster_name }}
+        path: "{{ httpd.httpd_ignition_document_root }}/{{ httpd.cluster_name}}"
         state: directory
         owner: root
         group: root
-        mode: 0644
+        mode: 0755
     - name: Upload install-config.yaml to the manifests folder
       template:
         src: install-config.yaml.j2
-        dest: /root/{{ okd.cluster_name }}/install-config.yaml
+        dest: "{{ httpd.httpd_ignition_document_root }}//{{ httpd.cluster_name}}/install-config.yaml"
         backup: yes
       register: install_config
     - name: Render Installation Manifests
       command: >
-        /usr/local/bin/openshift-install create manifests --dir=/root/{{ okd.cluster_name }}/
+        /usr/local/bin/openshift-install create manifests --dir={{ httpd.httpd_ignition_document_root }}/{{ httpd.cluster_name }}/
       when: install_config.changed
+    - name: Create Ignition Config Files from Rendered Installation Manifests
+      command: >
+        /usr/local/bin/openshift-install create ignition-configs --dir={{ httpd.httpd_ignition_document_root }}/{{ httpd.cluster_name }}/
+      when: install_config.changed
+    - name: Update permissions
+      file:
+        path: "{{ httpd.httpd_ignition_document_root }}/{{ httpd.cluster_name }}"
+        recurse: yes
+        state: directory
+        owner: apache
+        group: apache
+    - name: Update SELinux Labels
+      sefcontext:
+        target: "{{ httpd.httpd_ignition_document_root }}/{{ httpd.cluster_name }}(/.*)?"
+        setype: 'httpd_sys_content_t'
+        reload: True
+        state: present
+      register: selinux_relabel
+    - name: Run restorecon
+      command: >
+        restorecon -Rv {{ httpd.httpd_ignition_document_root }}
+      when: selinux_relabel.changed
   tags:
     - ignition::install_config
     - ignition::install_manifests

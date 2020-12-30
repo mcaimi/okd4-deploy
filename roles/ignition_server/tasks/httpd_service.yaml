@@ -1,0 +1,8 @@
+- block:
+    - name: Start HTTPD Service
+      systemd:
+        name: httpd.service
+        state: "{{ httpd.state }}"
+        enabled: "{{ httpd.enabled }}"
+  tags:
+    - ignition::systemd_unit

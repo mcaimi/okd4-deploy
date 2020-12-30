@@ -1,0 +1,14 @@
+- block:
+    - name: Configure HTTPD for serving Ignition Config Files
+      template:
+        src: etc/httpd/conf/httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+        backup: yes
+    - name: Configure Firewall
+      ansible.posix.firewalld:
+        port: "{{ httpd.httpd_tcp_port }}/tcp"
+        permanent: yes
+        state: enabled
+      notify: Reload FirewallD
+  tags:
+    - ignition::httpd_config
