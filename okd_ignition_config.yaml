@@ -1,0 +1,17 @@
+# OKD4 on Baremetal
+# Setup playbook for ignition config files
+
+- hosts: services
+  remote_user: opc
+  become: yes
+  any_errors_fatal: true
+
+  pre_tasks:
+    - include_vars:
+        file: "linux_server"
+    - include_vars:
+        file: "okd_cluster"
+    - include_vars:
+        file: "services/ignition_server"
+  roles:
+    - ignition_server

@@ -21,18 +21,9 @@
     - include_vars:
         file: "services/dns"
     - include_vars:
-        file: "services/dhcp"
-    - include_vars:
-        file: "services/pxe"
-    - include_vars:
         file: "services/haproxy"
-    - include_vars:
-        file: "services/ignition_server"
   roles:
     - linux_server
     - firewalld
     - dns
     - haproxy
-    - ignition_server
-    - dhcp
-    - pxe
