@@ -1,9 +1,0 @@
-- block:
-    - name: Enable FirewallD System Service
-      systemd:
-        name: firewalld.service
-        state: "{{ firewall.state }}"
-        enabled: "{{ firewall.enabled }}"
-  tags:
-    - firewalld::systemd_unit
-
