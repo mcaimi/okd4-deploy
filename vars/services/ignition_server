@@ -6,3 +6,18 @@ httpd:
   enabled: yes
   required_packages:
     - httpd
+    - firewalld
+
+  firewall:
+    required_packages:
+      - firewalld
+    services:
+      - name: http
+        rule_is_permanent: yes
+        state: enabled
+      - name: https
+        rule_is_permanent: yes
+        state: enabled
+    state: started
+    enabled: yes
+

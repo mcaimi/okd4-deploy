@@ -1,6 +1,7 @@
 haproxy:
   required_packages:
     - haproxy
+    - firewalld
   state: started
   enabled: yes
   globals:
@@ -49,3 +50,17 @@ haproxy:
       port: 443
       mode: tcp
       tag: "ingress"
+
+  firewall:
+    required_packages:
+      - firewalld
+    services:
+      - name: http
+        rule_is_permanent: yes
+        state: enabled
+      - name: https
+        rule_is_permanent: yes
+        state: enabled
+    state: started
+    enabled: yes
+

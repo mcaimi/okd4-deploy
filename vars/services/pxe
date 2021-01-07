@@ -1,1 +1,14 @@
 syslinux:
+  required_packages:
+    - firewalld
+
+  firewall:
+    required_packages:
+      - firewalld
+    services:
+      - name: tftp
+        rule_is_permanent: yes
+        state: enabled
+    state: started
+    enabled: yes
+

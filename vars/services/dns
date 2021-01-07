@@ -3,6 +3,7 @@ named:
   required_packages:
     - bind
     - bind-utils
+    - firewalld
   forwarders:
     - 8.8.8.8
     - 8.8.4.4
@@ -28,3 +29,14 @@ named:
   refresh: 7200
   retry: 7200
   expire: 2419200
+
+  firewall:
+    required_packages:
+      - firewalld
+    services:
+      - name: dns
+        rule_is_permanent: yes
+        state: enabled
+    state: started
+    enabled: yes
+

@@ -6,3 +6,8 @@ required_packages:
   - iptraf
   - tcpdump
   - nmap
+  - firewalld
+
+firewall:
+  state: started
+  enabled: true
