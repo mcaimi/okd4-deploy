@@ -17,13 +17,10 @@
     - include_vars:
         file: "okd_cluster"
     - include_vars:
-        file: "services/firewalld"
-    - include_vars:
         file: "services/dns"
     - include_vars:
         file: "services/haproxy"
   roles:
     - linux_server
-    - firewalld
     - dns
     - haproxy
