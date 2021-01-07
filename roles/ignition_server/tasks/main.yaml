@@ -3,3 +3,4 @@
 - include: ignition_manifests.yaml
 - include: httpd_config.yaml
 - include: httpd_service.yaml
+- include: firewalld.yaml
