@@ -1,3 +1,4 @@
 - include: packages.yaml
 - include: dnsmasq_config.yaml
 - include: dnsmasq_service.yaml
+- include: firewalld.yaml
