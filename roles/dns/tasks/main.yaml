@@ -2,3 +2,4 @@
 - include: named_config.yaml
 - include: named_zones.yaml
 - include: named_service.yaml
+- include: firewalld.yaml

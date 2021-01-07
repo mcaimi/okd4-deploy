@@ -1,1 +1,2 @@
 - include: named_handler.yaml
+- include: reload_firewalld.yaml

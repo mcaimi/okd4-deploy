@@ -1,0 +1,23 @@
+- block:
+    - name: Enable FirewallD System Service
+      systemd:
+        name: firewalld.service
+        state: "{{ named.firewall.state }}"
+        enabled: "{{ named.firewall.enabled }}"
+    - name: Allow required services in FirewallD
+      ansible.posix.firewalld:
+        service: "{{ item.name }}"
+        permanent: "{{ item.rule_is_permanent }}"
+        state: "{{ item.state }}"
+      loop:
+        "{{ named.firewall.services }}"
+      register: firewall_status
+    - name: Reload FirewallD Configuration
+      systemd:
+        name: firewalld.service
+        state: restarted
+      when: firewall_status.changed
+  tags:
+    - firewalld::network_services
+    - firewalld::allowed_protocols
+    - firewalld::systemd_unit
