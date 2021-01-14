@@ -29,6 +29,20 @@
     - name: Copy PXELINUX boot payload
       command: >
         cp /usr/share/syslinux/pxelinux.0 {{ dnsmasq.tftp_root }}/
+    - name: Fix SELinux contexts
+      community.general.sefcontext:
+        target: "{{ item.path }}"
+        setype: "{{ item.context }}"
+        state: present
+      loop:
+        - { path: "{{ dnsmasq.tftp_root }}(/.*)?", context: "dnsmasq_var_run_t" }
+        - { path: "{{ dnsmasq.log_facility }}", context: "dnsmasq_var_log_t" }
+    - name: Reload SELinux policies
+      command: >
+        restorecon -irv {{ item }}
+      loop:
+        - "{{ dnsmasq.tftp_root }}"
+        - "{{ dnsmasq.log_facility }}"
     - name: Reload Dnsmasq Static Leases
       systemd:
         name: dnsmasq.service
