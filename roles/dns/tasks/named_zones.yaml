@@ -10,17 +10,17 @@
         dest: /etc/named/zones/zonedb.{{ okd.base_domain }}
         backup: yes
       register: forward_zone
-    - name: Reload Forward Zone
-      systemd:
-        name: named.service
-        state: reloaded
-      when: forward_zone.changed
     - name: Compile Reverse Zone Database
       template:
         src: etc/named/zones/zonedb.reverse.j2
         dest: /etc/named/zones/zonedb.{{ okd.machine_cidr | reverse_zone }}
         backup: yes
       register: reverse_zone
+    - name: Reload Forward Zone
+      systemd:
+        name: named.service
+        state: reloaded
+      when: forward_zone.changed
     - name: Reload Reverse Zone
       systemd:
         name: named.service
