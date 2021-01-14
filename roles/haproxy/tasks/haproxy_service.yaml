@@ -1,9 +1,4 @@
 - block:
-    - name: Setup SELinux policies for HAProxy Service
-      ansible.posix.seboolean:
-        name: haproxy_connect_any
-        persistent: yes
-        state: yes
     - name: Enable HAProxy Service
       systemd:
         name: haproxy.service
