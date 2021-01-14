@@ -23,32 +23,39 @@ okd:
         ipaddress: 10.10.8.3
         mac_address: 00:11:22:33:44:55
         tag: "api,machineconfig"
+        ignition: "bootstrap.ign"
     masters:
       - name: master1
         ipaddress: 10.10.8.4
         mac_address: 00:11:22:33:44:56
         tag: "api,machineconfig"
+        ignition: "master.ign"
       - name: master2
         ipaddress: 10.10.8.5
         mac_address: 00:11:22:33:44:57
         tag: "api,machineconfig"
+        ignition: "master.ign"
       - name: master3
         ipaddress: 10.10.8.6
         mac_address: 00:11:22:33:44:58
         tag: "api,machineconfig"
+        ignition: "master.ign"
     workers:
       - name: worker1
         ipaddress: 10.10.8.7
         mac_address: 00:11:22:33:44:59
         tag: "infra,ingress,worker"
+        ignition: "worker.ign"
       - name: worker2
         ipaddress: 10.10.8.8
         mac_address: 00:11:22:33:44:5A
         tag: "infra,ingress,worker"
+        ignition: "worker.ign"
       - name: worker3
         ipaddress: 10.10.8.9
         mac_address: 00:11:22:33:44:5B
         tag: "infra,ingress,worker"
+        ignition: "worker.ign"
   services:
     nameserver:
       ipaddress: 10.10.8.2
