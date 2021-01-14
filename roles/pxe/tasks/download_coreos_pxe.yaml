@@ -1,0 +1,36 @@
+- block:
+    - name: Ensure download directory exists
+      file:
+        path: "{{ httpd.httpd_ignition_document_root }}/boot"
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+    - name: Download CoreOS installation images
+      get_url:
+        url: "{{ item.url }}"
+        dest: "{{ httpd.httpd_ignition_document_root }}/boot/{{ item.image }}"
+        mode: '0440'
+      loop:
+        - "{{ coreos.kernel }}"
+        - "{{ coreos.initrd }}"
+        - "{{ coreos.rootfs }}"
+    - name: Update path permissions
+      file:
+        path: "{{ httpd.httpd_ignition_document_root }}/boot"
+        state: directory
+        owner: apache
+        group: apache
+    - name: Update SELinux Labels
+      sefcontext:
+        target: "{{ httpd.httpd_ignition_document_root }}/boot"
+        setype: 'httpd_sys_content_t'
+        reload: True
+        state: present
+      register: selinux_relabel
+    - name: Run restorecon
+      command: >
+        restorecon -Rv {{ httpd.httpd_ignition_document_root }}
+      when: selinux_relabel.changed
+  tags:
+    - pxe::download_coreos_images

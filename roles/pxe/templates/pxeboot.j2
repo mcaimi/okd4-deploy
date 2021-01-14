@@ -1,0 +1,8 @@
+# managed by ansible
+DEFAULT pxeboot
+TIMEOUT 20
+PROMPT 10
+LABEL pxeboot
+    KERNEL {{ coreos.kernel.image }}
+    APPEND ip=dhcp rd.neednet=1 initrd={{ coreos.initrd.image }} console=tty0 console=ttyS0 coreos.inst=yes coreos.inst.install_dev=sda coreos.inst.image_url=http://{{ okd.services.ignition_server.ipaddress }}/boot/{{ coreos.rootfs.image }} coreos.inst.ignition_url=http://{{ okd.services.ignition_server.ipaddress }}/{{ httpd.cluster_name }}/{{ item.ignition }}
+

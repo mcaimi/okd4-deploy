@@ -1,0 +1,19 @@
+- block:
+    - name: Render and Upload PXE Entries (Bootstrap)
+      template:
+        src: pxeboot.j2
+        dest: "{{ dnsmasq.tftp_root }}/pxelinux.cfg/{{ item.mac_address | regex_replace(':', '-') | lower }}"
+      loop: "{{ okd.machines.bootstrap }}"
+    - name: Render and Upload PXE Entries (Masters)
+      template:
+        src: pxeboot.j2
+        dest: "{{ dnsmasq.tftp_root }}/pxelinux.cfg/{{ item.mac_address | regex_replace(':', '-') | lower }}"
+      loop: "{{ okd.machines.masters }}"
+    - name: Render and Upload PXE Entries (Workers)
+      template:
+        src: pxeboot.j2
+        dest: "{{ dnsmasq.tftp_root }}/pxelinux.cfg/{{ item.mac_address | regex_replace(':', '-') | lower }}"
+      loop: "{{ okd.machines.workers }}"
+  tags:
+    - pxe::pxeboot
+    - pxe::pxelinux_config

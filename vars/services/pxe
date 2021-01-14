@@ -12,3 +12,13 @@ syslinux:
     state: started
     enabled: yes
 
+coreos:
+  kernel:
+    url: "https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/33.20201214.3.1/x86_64/fedora-coreos-33.20201214.3.1-live-kernel-x86_64"
+    image: "coreos-kernel.img"
+  initrd:
+    url: "https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/33.20201214.3.1/x86_64/fedora-coreos-33.20201214.3.1-live-initramfs.x86_64.img"
+    image: "coreos-initrd.img"
+  rootfs:
+    url: "https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/33.20201214.3.1/x86_64/fedora-coreos-33.20201214.3.1-live-rootfs.x86_64.img"
+    image: "coreos-rootfs.img"

@@ -1,1 +1,3 @@
 - include: firewalld.yaml
+- include: pxeboot_entries.yaml
+- include: download_coreos_pxe.yaml
