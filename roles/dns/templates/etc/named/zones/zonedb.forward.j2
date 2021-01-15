@@ -32,9 +32,17 @@ api-int               IN     A     {{ okd.services.balancer.ipaddress }}
 {% for machine in okd.machines.masters %}
 etcd-{{ loop.index }} IN     A     {{ machine.ipaddress }}
 {% endfor %}
-
 {% for machine in okd.machines.masters %}
 _etcd-server-ssl._tcp SRV 0 10 2380 etcd-{{loop.index}}
+{% endfor %}
+{% for machine in okd.machines.bootstrap %}
+{{ machine.name }}  IN  A   {{ machine.ipaddress }}
+{% endfor %}
+{% for machine in okd.machines.masters %}
+{{ machine.name }}  IN  A   {{ machine.ipaddress }}
+{% endfor %}
+{% for machine in okd.machines.workers %}
+{{ machine.name }}  IN  A   {{ machine.ipaddress }}
 {% endfor %}
 
 $ORIGIN apps.{{ okd.cluster_name }}.{{ okd.base_domain }}.

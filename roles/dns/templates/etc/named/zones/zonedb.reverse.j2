@@ -13,14 +13,14 @@ $TTL {{ named.ttl }}
 ; PTR records
 ; bootstrap
 {% for machine in okd.machines.bootstrap %}
-{{ machine.ipaddress | octet(index=3) }}  IN  PTR   {{ machine.name }}.{{ okd.base_domain }}.
+{{ machine.ipaddress | octet(index=3) }}  IN  PTR   {{ machine.name }}.{{ okd.cluster_name }}.{{ okd.base_domain }}.
 {% endfor %}
 ; masters
 {% for machine in okd.machines.masters %}
-{{ machine.ipaddress | octet(index=3) }}  IN  PTR   {{ machine.name }}.{{ okd.base_domain }}.
+{{ machine.ipaddress | octet(index=3) }}  IN  PTR   {{ machine.name }}.{{ okd.cluster_name }}.{{ okd.base_domain }}.
 {% endfor %}
 ; workers
 {% for machine in okd.machines.workers %}
-{{ machine.ipaddress | octet(index=3) }}  IN  PTR   {{ machine.name }}.{{ okd.base_domain }}.
+{{ machine.ipaddress | octet(index=3) }}  IN  PTR   {{ machine.name }}.{{ okd.cluster_name }}.{{ okd.base_domain }}.
 {% endfor %}
 
