@@ -1,10 +1,11 @@
 okd:
   version: 4.6.0
   cleanup_manifest_folder: "{{ cleanup_manifests | default(False) }}"
-  install_link: "https://github.com/openshift/okd/releases/download/4.6.0-0.okd-2020-11-27-200126/openshift-install-linux-4.6.0-0.okd-2020-11-27-200126.tar.gz"
-  install_checksum: "sha256:6eb1bbabb84e3b165aa7cfe673d5d60b2490616bfa9dca5f5878ead7aed3e770"
-  client_link: "https://github.com/openshift/okd/releases/download/4.6.0-0.okd-2020-11-27-200126/openshift-client-linux-4.6.0-0.okd-2020-11-27-200126.tar.gz"
-  client_checksum: "sha256:4326a13c118b28222ae02439aa8782994fb84571045620313c8a35c2c355c2fa"
+  download_new_installer_packages: "{{ download_installer | default(True) }}"
+  install_link: "https://github.com/openshift/okd/releases/download/4.6.0-0.okd-2020-12-12-135354/openshift-install-linux-4.6.0-0.okd-2020-12-12-135354.tar.gz"
+  install_checksum: "sha256:60b7f459ddb6b7a2397607263ab57963ff316e713cdc3129fb1950c552626ea7"
+  client_link: "https://github.com/openshift/okd/releases/download/4.6.0-0.okd-2020-12-12-135354/openshift-client-linux-4.6.0-0.okd-2020-12-12-135354.tar.gz"
+  client_checksum: "sha256:7949f33d6e671c98859ab4a13908f341a69430f030643d6ebce43425151bd559"
   cluster_name: "kvm-lab"
   base_domain: "okd.local"
   cluster_subnet: "10.128.0.0/14"
