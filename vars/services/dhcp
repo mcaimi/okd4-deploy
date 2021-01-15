@@ -4,9 +4,9 @@ dnsmasq:
     - dnsmasq-utils
     - syslinux
     - firewalld
-  dhcp_interface: eth0
+  dhcp_interface: enp1s0
   log_facility: "/var/log/leases.log"
-  dhcp_range: "192.168.122.100,192.168.122.120,255.255.255.0"
+  dhcp_range: "192.168.100.100,192.168.100.120,255.255.255.0"
   validity: 8h
   dns_host: "{{ okd.services.nameserver.ipaddress }}"
   gateway: "{{ okd.machine_default_gw }}"

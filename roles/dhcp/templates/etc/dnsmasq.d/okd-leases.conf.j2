@@ -23,6 +23,5 @@ log-queries # log queries.
 log-dhcp    # log dhcp related messages.
 enable-tftp # for PXE boot
 tftp-root={{ dnsmasq.tftp_root }}
-dhcp-boot=pxelinux
-pxe-service=X86PC,"Boot CoreOS",pxelinux
+dhcp-boot=pxelinux.0
 

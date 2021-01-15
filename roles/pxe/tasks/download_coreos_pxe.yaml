@@ -10,10 +10,8 @@
       get_url:
         url: "{{ item.url }}"
         dest: "{{ httpd.httpd_ignition_document_root }}/boot/{{ item.image }}"
-        mode: '0440'
+        mode: '0444'
       loop:
-        - "{{ coreos.kernel }}"
-        - "{{ coreos.initrd }}"
         - "{{ coreos.rootfs }}"
     - name: Update path permissions
       file:
