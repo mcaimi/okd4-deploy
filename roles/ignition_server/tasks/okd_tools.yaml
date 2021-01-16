@@ -7,7 +7,7 @@
       loop:
         - "{{ okd.install_link }}"
         - "{{ okd.client_link }}"
-      when: "{{ okd.download_new_installer_packages }}"
+      when: okd.download_new_installer_packages
   tags:
     - ignition::openshift_install_download
     - ignition::openshift_client_download
