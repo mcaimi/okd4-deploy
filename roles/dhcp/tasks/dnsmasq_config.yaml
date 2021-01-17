@@ -29,14 +29,6 @@
     - name: Copy PXELINUX boot payload
       command: >
         cp /usr/share/syslinux/pxelinux.0 /usr/share/syslinux/ldlinux.c32 {{ dnsmasq.tftp_root }}/
-    - name: Download CoreOS kernel and initrd images
-      get_url:
-        url: "{{ item.url }}"
-        dest: "{{ dnsmasq.tftp_root }}/{{ item.image }}"
-        mode: '0444'
-      loop:
-        - "{{ coreos.kernel }}"
-        - "{{ coreos.initrd }}"
     - name: Fix SELinux contexts
       community.general.sefcontext:
         target: "{{ item.path }}"

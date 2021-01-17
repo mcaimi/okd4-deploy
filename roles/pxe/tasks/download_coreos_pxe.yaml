@@ -6,12 +6,14 @@
         owner: root
         group: root
         mode: 0755
-    - name: Download CoreOS installation images
+    - name: Download CoreOS PXE installation images
       get_url:
         url: "{{ item.url }}"
         dest: "{{ httpd.httpd_ignition_document_root }}/boot/{{ item.image }}"
         mode: '0444'
       loop:
+        - "{{ coreos.kernel }}"
+        - "{{ coreos.initrd }}"
         - "{{ coreos.rootfs }}"
     - name: Update path permissions
       file:
