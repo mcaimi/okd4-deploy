@@ -29,14 +29,22 @@
     - name: Copy PXELINUX boot payload
       command: >
         cp /usr/share/syslinux/pxelinux.0 /usr/share/syslinux/ldlinux.c32 {{ dnsmasq.tftp_root }}/
+    - name: Create DNSMASQ log files for OKD cluster
+      file:
+        path: "{{ dnsmasq.log_facility }}"
+        owner: dnsmasq
+        group: dnsmasq
+        mode: '0666'
+        state: touch
     - name: Fix SELinux contexts
       community.general.sefcontext:
         target: "{{ item.path }}"
         setype: "{{ item.context }}"
+        seuser: "{{ item.user }}"
         state: present
       loop:
-        - { path: "{{ dnsmasq.tftp_root }}(/.*)?", context: "dnsmasq_var_run_t" }
-        - { path: "{{ dnsmasq.log_facility }}", context: "dnsmasq_var_log_t" }
+        - { path: "{{ dnsmasq.tftp_root }}(/.*)?", user: "system_u", context: "dnsmasq_var_run_t" }
+        - { path: "{{ dnsmasq.log_facility }}", user: "system_u", context: "dnsmasq_var_log_t" }
     - name: Reload SELinux policies
       command: >
         restorecon -irv {{ item }}
