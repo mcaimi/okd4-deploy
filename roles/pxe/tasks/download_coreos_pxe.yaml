@@ -27,10 +27,22 @@
         setype: 'httpd_sys_content_t'
         reload: True
         state: present
-      register: selinux_relabel
-    - name: Run restorecon
+    - name: Copy PXELINUX boot payload
       command: >
-        restorecon -Rv {{ httpd.httpd_ignition_document_root }}
-      when: selinux_relabel.changed
+        rsync -aP /usr/share/syslinux/ {{ dnsmasq.tftp_root }}/
+    - name: Fix SELinux contexts
+      community.general.sefcontext:
+        target: "{{ item.path }}"
+        setype: "{{ item.context }}"
+        seuser: "{{ item.user }}"
+        state: present
+      loop:
+        - { path: "{{ dnsmasq.tftp_root }}(/.*)?", user: "system_u", context: "dnsmasq_var_run_t" }
+    - name: Reload SELinux policies
+      command: >
+        restorecon -irv {{ item }}
+      loop:
+        - "{{ httpd.httpd_ignition_document_root }}"
+        - "{{ dnsmasq.tftp_root }}"
   tags:
     - pxe::download_coreos_images
