@@ -26,14 +26,11 @@
       loop:
         - "{{ dnsmasq.tftp_root }}"
         - "{{ dnsmasq.tftp_root }}/pxelinux.cfg"
-    - name: Copy PXELINUX boot payload
-      command: >
-        cp /usr/share/syslinux/pxelinux.0 /usr/share/syslinux/ldlinux.c32 {{ dnsmasq.tftp_root }}/
     - name: Create DNSMASQ log files for OKD cluster
       file:
         path: "{{ dnsmasq.log_facility }}"
-        owner: dnsmasq
-        group: dnsmasq
+        owner: "{{ dnsmasq.log_owner }}"
+        group: "{{ dnsmasq.log_group }}"
         mode: '0666'
         state: touch
     - name: Fix SELinux contexts
