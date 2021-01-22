@@ -21,6 +21,25 @@
       command: >
         /usr/local/bin/openshift-install create manifests --dir={{ httpd.httpd_ignition_document_root }}/{{ httpd.cluster_name }}/
       when: install_config.changed
+    - name: Download the scheduler configuration manifest
+      slurp:
+        path: "{{ httpd.httpd_ignition_document_root }}/{{ httpd.cluster_name }}/manifests/cluster-scheduler-02-config.yml"
+      register: cluster_scheduler_params
+      when: install_config.changed
+    - name: Patch mastersSchedulable option
+      set_fact:
+        cluster_scheduler_data: "{{ cluster_scheduler_params['content'] | b64decode | from_yaml | combine(schedulerpatch) }}"
+      vars:
+        schedulerpatch:
+          spec:
+            mastersSchedulable: "{{ okd.masters_schedulable }}"
+            policy:
+              name: ''
+      when: install_config.changed
+    - name: Upload new configuration
+      copy:
+        content: '{{ cluster_scheduler_data | to_nice_yaml }}'
+        dest: "{{ httpd.httpd_ignition_document_root }}/{{ httpd.cluster_name }}/manifests/cluster-scheduler-02-config.yml"
     - name: Create Ignition Config Files from Rendered Installation Manifests
       command: >
         /usr/local/bin/openshift-install create ignition-configs --dir={{ httpd.httpd_ignition_document_root }}/{{ httpd.cluster_name }}/

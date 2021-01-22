@@ -14,6 +14,7 @@ okd:
   services_subnet: "172.30.0.0/16"
   machine_cidr: "192.168.100.0/24"
   machine_default_gw: "192.168.100.1"
+  masters_schedulable: False
   fips_mode: false
   pull_secret: '{"auths":{"fake":{"auth": "bar"}}}'
   ssh_key: ""
