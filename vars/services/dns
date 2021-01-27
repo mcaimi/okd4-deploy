@@ -10,8 +10,8 @@ named:
     - 1.1.1.1
     - 1.0.0.1
     - 9.9.9.9
-  enable_dnssec: yes
-  validate_dnssec: yes
+  enable_dnssec: no
+  validate_dnssec: no
   recursion_enabled: yes
   allow_query_from:
     - localhost

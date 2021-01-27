@@ -8,7 +8,7 @@ dnsmasq:
   log_facility: "/var/log/leases.log"
   log_owner: "dnsmasq"
   log_group: "dnsmasq"
-  dhcp_range: "192.168.100.100,192.168.100.120,255.255.255.0"
+  dhcp_range: "{{ okd.machine_default_dhcp_range }}"
   validity: 8h
   dns_host: "{{ okd.services.nameserver.ipaddress }}"
   gateway: "{{ okd.machine_default_gw }}"

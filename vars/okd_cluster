@@ -14,6 +14,7 @@ okd:
   services_subnet: "172.30.0.0/16"
   machine_cidr: "192.168.100.0/24"
   machine_default_gw: "192.168.100.1"
+  machine_default_dhcp_range: "192.168.100.100,192.168.100.120,255.255.255.0"
   masters_schedulable: False
   fips_mode: false
   pull_secret: '{"auths":{"fake":{"auth": "bar"}}}'
