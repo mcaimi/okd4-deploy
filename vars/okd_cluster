@@ -1,11 +1,11 @@
 okd:
-  version: 4.6.0
+  version: 4.9.0
   cleanup_manifest_folder: "{{ cleanup_manifests | default(False) }}"
   download_new_installer_packages: "{{ download_installer | default(True) }}"
-  install_link: "https://github.com/openshift/okd/releases/download/4.6.0-0.okd-2020-12-12-135354/openshift-install-linux-4.6.0-0.okd-2020-12-12-135354.tar.gz"
-  install_checksum: "sha256:60b7f459ddb6b7a2397607263ab57963ff316e713cdc3129fb1950c552626ea7"
-  client_link: "https://github.com/openshift/okd/releases/download/4.6.0-0.okd-2020-12-12-135354/openshift-client-linux-4.6.0-0.okd-2020-12-12-135354.tar.gz"
-  client_checksum: "sha256:7949f33d6e671c98859ab4a13908f341a69430f030643d6ebce43425151bd559"
+  install_link: "https://github.com/openshift/okd/releases/download/4.9.0-0.okd-2022-01-29-035536/openshift-install-linux-4.9.0-0.okd-2022-01-29-035536.tar.gz"
+  install_checksum: "sha256:8f5077e55256d4c2fa3f96862d4ae83335dfa33d4330f4c5e252d5a9bcb1339b"
+  client_link: "https://github.com/openshift/okd/releases/download/4.9.0-0.okd-2022-01-29-035536/openshift-client-linux-4.9.0-0.okd-2022-01-29-035536.tar.gz"
+  client_checksum: "sha256:45957a61173a15ccaad11ebd3fa1a7e78ec775158a40a902aaf20a4be25605ec"
   cluster_name: "kvm-lab"
   base_domain: "okd.local"
   cluster_subnet: "10.128.0.0/14"
@@ -73,11 +73,11 @@ okd:
 coreos:
   install_device: /dev/vda
   kernel:
-    url: "https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/33.20210104.3.0/x86_64/fedora-coreos-33.20210104.3.0-live-kernel-x86_64"
+    url: "https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/35.20220103.3.0/x86_64/fedora-coreos-35.20220103.3.0-live-kernel-x86_64"
     image: "coreos-kernel.img"
   initrd:
-    url: "https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/33.20210104.3.0/x86_64/fedora-coreos-33.20210104.3.0-live-initramfs.x86_64.img"
+    url: "https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/35.20220103.3.0/x86_64/fedora-coreos-35.20220103.3.0-live-initramfs.x86_64.img"
     image: "coreos-initrd.img"
   rootfs:
-    url: "https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/33.20210104.3.0/x86_64/fedora-coreos-33.20210104.3.0-live-rootfs.x86_64.img"
+    url: "https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/35.20220103.3.0/x86_64/fedora-coreos-35.20220103.3.0-live-rootfs.x86_64.img"
     image: "coreos-rootfs.img"
