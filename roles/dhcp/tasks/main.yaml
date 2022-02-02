@@ -1,4 +1,4 @@
-- include: packages.yaml
-- include: dnsmasq_config.yaml
-- include: dnsmasq_service.yaml
-- include: firewalld.yaml
+- include_tasks: packages.yaml
+- include_tasks: dnsmasq_config.yaml
+- include_tasks: dnsmasq_service.yaml
+- include_tasks: firewalld.yaml

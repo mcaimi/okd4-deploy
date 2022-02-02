@@ -1,1 +1,1 @@
-- include: reload_firewalld.yaml
+- include_tasks: reload_firewalld.yaml

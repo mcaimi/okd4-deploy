@@ -1,4 +1,4 @@
-- include: packages.yaml
-- include: haproxy_config.yaml
-- include: haproxy_service.yaml
-- include: firewalld.yaml
+- include_tasks: packages.yaml
+- include_tasks: haproxy_config.yaml
+- include_tasks: haproxy_service.yaml
+- include_tasks: firewalld.yaml

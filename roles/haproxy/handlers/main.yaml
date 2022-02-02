@@ -1,2 +1,2 @@
-- include: reload_haproxy.yaml
-- include: reload_firewalld.yaml
+- include_tasks: reload_haproxy.yaml
+- include_tasks: reload_firewalld.yaml

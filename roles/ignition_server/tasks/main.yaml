@@ -1,6 +1,6 @@
-- include: packages.yaml
-- include: okd_tools.yaml
-- include: ignition_manifests.yaml
-- include: httpd_config.yaml
-- include: httpd_service.yaml
-- include: firewalld.yaml
+- include_tasks: packages.yaml
+- include_tasks: okd_tools.yaml
+- include_tasks: ignition_manifests.yaml
+- include_tasks: httpd_config.yaml
+- include_tasks: httpd_service.yaml
+- include_tasks: firewalld.yaml

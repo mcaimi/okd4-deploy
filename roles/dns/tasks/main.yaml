@@ -1,5 +1,5 @@
-- include: packages.yaml
-- include: named_config.yaml
-- include: named_zones.yaml
-- include: named_service.yaml
-- include: firewalld.yaml
+- include_tasks: packages.yaml
+- include_tasks: named_config.yaml
+- include_tasks: named_zones.yaml
+- include_tasks: named_service.yaml
+- include_tasks: firewalld.yaml

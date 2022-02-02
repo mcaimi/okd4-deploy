@@ -1,5 +1,5 @@
 ---
-- include: update.yaml
+- include_tasks: update.yaml
   when: package_manager.perform_distro_update == 'yes'
-- include: packages.yaml
-- include: firewalld.yaml
+- include_tasks: packages.yaml
+- include_tasks: firewalld.yaml
